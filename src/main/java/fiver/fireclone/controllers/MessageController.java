@@ -1,5 +1,6 @@
 package fiver.fireclone.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import fiver.fireclone.models.Message;
@@ -18,12 +19,12 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message createMessage(@RequestBody Message message) {
-        // Implement createMessage logic using messageService
+    public ResponseEntity<Message> createMessage(@RequestBody Message message) {
+        return ResponseEntity.ok(messageService.createMessage(message));
     }
 
     @GetMapping("/{id}")
     public List<Message> getMessages(@PathVariable String id) {
-        // Implement getMessages logic using messageService
+        return messageService.getMessages(id);
     }
 }

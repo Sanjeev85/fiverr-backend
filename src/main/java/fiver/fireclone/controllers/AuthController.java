@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import fiver.fireclone.Dto.LoginRequest;
+import fiver.fireclone.Dto.RegisterRequest;
+import fiver.fireclone.service.AuthService;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -16,16 +20,17 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-        // Implement register logic using authService
+        return ResponseEntity.ok(authService.register(registerRequest));
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        // Implement login logic using authService
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
-        // Implement logout logic using authService
+        return ResponseEntity.ok(authService.logout());
+    
     }
 }

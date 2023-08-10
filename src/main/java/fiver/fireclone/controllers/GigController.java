@@ -1,6 +1,7 @@
 package fiver.fireclone.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import fiver.fireclone.models.Gig;
@@ -14,28 +15,32 @@ public class GigController {
 
     private final GigService gigService;
 
-    @Autowired
     public GigController(GigService gigService) {
         this.gigService = gigService;
     }
 
     @PostMapping
     public Gig createGig(@RequestBody Gig gig) {
-        // Implement createGig logic using gigService
+        return gigService.createGig(gig);
     }
 
     @DeleteMapping("/{id}")
     public void deleteGig(@PathVariable String id) {
-        // Implement deleteGig logic using gigService
+        gigService.deleteGig(id);
     }
 
     @GetMapping("/single/{id}")
-    public Gig getGig(@PathVariable String id) {
-        // Implement getGig logic using gigService
+    public ResponseEntity<Gig> getGig(@PathVariable String id) {
+        var gig = gigService.getGig(id);
+        if (gig == null)
+            return ResponseEntity.badRequest().body(new Gig());
+
+        else
+            return ResponseEntity.ok(gig);
     }
 
     @GetMapping
     public List<Gig> getGigs() {
-        // Implement getGigs logic using gigService
+        return gigService.getGigs();
     }
 }

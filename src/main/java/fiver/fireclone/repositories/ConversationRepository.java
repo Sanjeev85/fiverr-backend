@@ -1,9 +1,11 @@
 package fiver.fireclone.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import fiver.fireclone.models.Order;
+import fiver.fireclone.models.Conversation;
 
-public interface OrderRepository extends MongoRepository<Order, String> {
+public interface ConversationRepository extends MongoRepository<Conversation, String> {
     // Add any additional custom queries you need
 }

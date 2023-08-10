@@ -1,6 +1,5 @@
 package fiver.fireclone.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,23 +14,27 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @Autowired
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
 
     @PostMapping
     public ResponseEntity<String> createReview(@RequestBody Review review) {
-        // Implement createReview logic using reviewService
+        String savedMessage = reviewService.createReview(review);
+        if (savedMessage.equals("You have already created a review")) {
+            ResponseEntity.badRequest().body("Review already created");
+        }
+        return ResponseEntity.ok(savedMessage);
     }
 
     @GetMapping("/{gigId}")
     public List<Review> getReviews(@PathVariable String gigId) {
-        // Implement getReviews logic using reviewService
+        return reviewService.getReviews(gigId);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReview(@PathVariable String id) {
-        // Implement deleteReview logic using reviewService
+        var message = reviewService.deleteReview(id);
+        return ResponseEntity.ok(message);
     }
 }

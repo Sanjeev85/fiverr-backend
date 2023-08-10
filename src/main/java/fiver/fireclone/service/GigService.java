@@ -13,7 +13,6 @@ public class GigService {
 
     private final GigRepository gigRepository;
 
-    @Autowired
     public GigService(GigRepository gigRepository) {
         this.gigRepository = gigRepository;
     }

@@ -13,28 +13,27 @@ public class ConversationController {
 
     private final ConversationService conversationService;
 
-    @Autowired
     public ConversationController(ConversationService conversationService) {
         this.conversationService = conversationService;
     }
 
     @GetMapping
     public List<Conversation> getConversations() {
-        // Implement getConversations logic using conversationService
+        return conversationService.getConversations();
     }
 
     @PostMapping
     public Conversation createConversation(@RequestBody Conversation conversation) {
-        // Implement createConversation logic using conversationService
+        return conversationService.createConversation(conversation);
     }
 
     @GetMapping("/single/{id}")
     public Conversation getSingleConversation(@PathVariable String id) {
-        // Implement getSingleConversation logic using conversationService
+        return conversationService.getSingleConversation(id);
     }
 
     @PutMapping("/{id}")
     public Conversation updateConversation(@PathVariable String id, @RequestBody Conversation conversation) {
-        // Implement updateConversation logic using conversationService
+        return conversationService.updateConversation(id, conversation);
     }
 }

@@ -1,6 +1,5 @@
 package fiver.fireclone.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +12,22 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
-        // Implement deleteUser logic using userService
+        return ResponseEntity.ok(userService.deleteUser(id));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable String id) {
-        // Implement getUser logic using userService
+        var user = userService.getUser(id);
+
+        if (user == null)
+            return ResponseEntity.ok(user);
+
+        return ResponseEntity.notFound().build();
     }
 }

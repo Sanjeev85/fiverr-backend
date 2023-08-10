@@ -1,7 +1,5 @@
 package fiver.fireclone.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import fiver.fireclone.models.Review;
@@ -14,22 +12,26 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    @Autowired
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
 
-    public ResponseEntity<String> createReview(Review review) {
-        // Implement createReview logic using reviewRepository
-        return ResponseEntity.ok("Review created");
+    public String createReview(Review review) {
+        Review findReview = reviewRepository.findAll().stream()
+                .filter(currReview -> review.getId() == currReview.getId()).toList().get(0);
+
+        if (findReview != null)
+            return "You have already created a review";
+
+        return reviewRepository.save(review).toString();
     }
 
     public List<Review> getReviews(String gigId) {
         return reviewRepository.findByGigId(gigId);
     }
 
-    public ResponseEntity<String> deleteReview(String id) {
-        // Implement deleteReview logic using reviewRepository
-        return ResponseEntity.ok("Review deleted");
+    public String deleteReview(String id) {
+        reviewRepository.deleteById(id);
+        return "Review Deleted";
     }
 }

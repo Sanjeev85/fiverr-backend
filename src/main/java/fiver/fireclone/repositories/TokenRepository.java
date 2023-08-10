@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import fiver.fireclone.models.Token;
 
-public interface TokenRepository extends MongoRepository<Token, Integer> {
+public interface TokenRepository extends MongoRepository<Token, String> {
 
     @Query("{ 'user.$id': ?0, $or: [ { 'expired': false }, { 'revoked': false } ] }")
     List<Token> findAllValidTokenByUser(String userId);
