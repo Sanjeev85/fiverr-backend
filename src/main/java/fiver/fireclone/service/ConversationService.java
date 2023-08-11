@@ -28,6 +28,7 @@ public class ConversationService {
     }
 
     public List<Conversation> getConversations() {
+        System.out.println("conversation empty");
         return conversationRepository.findAll();
     }
 

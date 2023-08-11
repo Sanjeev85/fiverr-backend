@@ -1,5 +1,6 @@
 package fiver.fireclone.service;
 
+import fiver.fireclone.models.Role;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,21 +22,21 @@ public class AuthService {
     private final AuthenticationManager authManager;
 
     public String register(RegisterRequest registerRequest) {
-        var user = User.builder().username(registerRequest.getUsername())
+        var user = User.builder().email(registerRequest.getEmail())
+                .role(Role.USER)
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .username(registerRequest.getUsername()).build();
-
+        System.out.println("saving data " + user.toString());
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
-        return " jwt " + jwt.toString();
+        return " jwt " + jwt;
     }
 
     public String login(LoginRequest loginRequest) {
-        System.out.println("auth service");
         authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                         loginRequest.getPassword()));
-        User user = userRepository.findByUsername(loginRequest.getEmail());
+        User user = userRepository.findByUsername(loginRequest.getUsername());
         var jwt = jwtService.generateToken(user);
         return jwt;
     }

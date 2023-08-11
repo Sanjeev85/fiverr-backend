@@ -1,7 +1,10 @@
 package fiver.fireclone.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import fiver.fireclone.Dto.LoginRequest;
@@ -13,6 +16,7 @@ import fiver.fireclone.service.AuthService;
 public class AuthController {
 
     private final AuthService authService;
+    private final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -28,9 +32,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(loginRequest));
     }
 
+
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
-        return ResponseEntity.ok(authService.logout());
-    
+    public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        this.logoutHandler.logout(request, response, authentication);
+        return "redirect:/login";
     }
+
 }

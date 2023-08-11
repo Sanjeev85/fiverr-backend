@@ -1,5 +1,6 @@
 package fiver.fireclone.Dto;
 
+import fiver.fireclone.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class RegisterRequest {
     private String username;
     private String email;
+    private Role role;
     private String password;
     // Other fields, getters, setters
 }

@@ -14,12 +14,8 @@ public class FetchUserDetailsService {
     private final UserRepository userRepository;
 
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) {
-                return userRepository.findByEmail(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            }
+        return username -> {
+            return userRepository.findByUsername(username);
         };
     }
 }
